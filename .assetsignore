@@ -1,0 +1,7 @@
+node_modules
+.git
+.wrangler
+*.ts
+package.json
+tsconfig.json
+wrangler.toml
