@@ -20,11 +20,12 @@ The dream: ultimately, a single readme with the domain as the filename should be
 - ✅ tsconfig.json will be added automatically as well as .gitignore, .assetsignore, etc
 - ✅ if there's a folder that matches a domain, that will be placed in the folder too and it will become public
 - ✅ wrapper (e.g. ratelimiter or authlayer) can be in between. part of template
-- Test the API to return deployments. Test if template merging works as desired.
-- Deploy on https://monoflare.cloud
-- Domains need to be extracted from cloudflare via API
-- Make multipatch actually work!
-- Deployment should happen in an individual repo or branch per deployment, because the build step can take a while and we want visibility. Also for other reasons (such as exposure) we want separate repos.
+- ✅ Test the API to return deployments. Test if template merging works as desired.
+- ✅ Deploy on https://monoflare.cloud
+- Domains need to be extracted from CloudFlare via API
+- Make `multipatch` actually work. Deployment should happen in an individual repo or branch per deployment, because the build step can take a while and we want visibility. Also for other reasons (such as exposure) we want separate repos.
+  - create forgithub.patch
+- make typescript analysis work at `zipobject` so we can actually use the single file as source
 
 Now we have one-file workers with automatic domains!
 
