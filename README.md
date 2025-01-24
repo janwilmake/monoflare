@@ -1,5 +1,8 @@
 # Monoflare - The Monorepo for Cloudflare Microservices
 
+> [!IMPORTANT]
+> This is currently just a WIP and isn't functional yet
+
 Problem: serverless and workers are great but require too much config to spin up a domain somewhere.
 
 Main idea: a compiler that turns a single file to a folder with that file and all configurations needed to deploy a website/api on cloudflare.
@@ -38,15 +41,8 @@ Parsing the file
 
 # Wishlist
 
-- logo: many buns disguised in the clouds
-
 - nlang functionality:
-
   - generate fetch handler logic from regular functions, just using domain-name filenames that don't have it as candidates for this.
   - openapi is very useful
-
 - cross-cloud! allow vercel & deno too, and bun if possible. choose most logical one. cross language too!
-
-- environment variables get set automatically, directly to cloudflare worker, based on single central file
-
-- before open sourcing this... figure out gtm that makes me money.
+- environment variables get set automatically, directly to cloudflare worker, based on single central secrets repo
