@@ -300,6 +300,13 @@ export default {
     // TODO: use multipatch.forgithub to be able to push to which ever repo has changed
     const patches = await multipatch(results);
 
-    return new Response("Deployments initiated", { status: 202 });
+    return new Response(
+      JSON.stringify(
+        { message: "Deployments initiated", results, patches },
+        undefined,
+        2,
+      ),
+      { status: 202 },
+    );
   },
 };
