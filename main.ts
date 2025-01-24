@@ -49,8 +49,8 @@ const parseFile = (path: string) => {
   const ext = filenameChunks.pop()!;
   const folder = folders.join("/");
   const name = filenameChunks.join(".");
-  const id = filenameChunks[0];
-  const firstFolder = folders[1];
+  const id = filenameChunks[0] as string | undefined;
+  const firstFolder = folders[1] as string | undefined;
   return {
     firstFolder,
     folder,
@@ -66,8 +66,8 @@ const parseFile = (path: string) => {
  * This is done by transforming to a FileObject where every file path is prefixed with `/owner/repo/tree/branch/`
  */
 const build = (context: {
-  files: FileObject;
-  template: FileObject;
+  files: { files: FileObject };
+  template: { files: FileObject };
   /** The domains available in your cloudflare */
   domains: string[];
   /** owner where the build is going */
@@ -101,15 +101,15 @@ const build = (context: {
     ),
   );
 
-  const newFiles = Object.keys(files)
+  const newFiles = Object.keys(files.files)
     .map((path) => {
-      const file = files[path];
+      const file = files.files[path];
 
       const parse = parseFile(path);
 
       // 1) CHECK FOR FILENAMES FIRST
       const matchFileId = domainIds.find(
-        (id) => parse.id === id || parse.id.startsWith(id + "."),
+        (id) => parse.id === id || parse.id?.startsWith(id + "."),
       );
 
       if (matchFileId) {
@@ -123,19 +123,20 @@ const build = (context: {
             ? "index.ts"
             : "index." + parse.ext;
 
-        const newPath = `/build/${matchFileId}/${newFilename}`;
-        return { newPath, file, routeId: parse.id };
+        const newPath = `/${newFilename}`;
+        return { newPath, file, routeId: parse.id! };
       }
 
       // THEN CHECK FOR FOLDERNAMES
       const matchFolderId = domainIds.find(
         (id) =>
-          parse.firstFolder === id || parse.firstFolder.startsWith(id + "."),
+          parse.firstFolder === id || parse.firstFolder?.startsWith(id + "."),
       );
 
       if (matchFolderId) {
-        const newPath = `/build${path}`;
-        return { newPath, file, routeId: parse.firstFolder };
+        const withoutFolder = "/" + path.split("/").slice(2).join("/");
+        const newPath = withoutFolder;
+        return { newPath, file, routeId: parse.firstFolder! };
       }
     })
     .filter((x) => !!x);
@@ -144,16 +145,15 @@ const build = (context: {
   const routeIds = Array.from(new Set(newFiles.map((x) => x.routeId)));
 
   const buildResults = routeIds.map((routeId) => {
-    const deploymentName = routeId.replaceAll(".", "_");
+    const deploymentName = "monoflare_" + routeId.replaceAll(".", "_");
     const baseFileEntries = newFiles
       .filter((x) => x.routeId === routeId)
       .map((x) => [x.newPath, x.file] as [string, any]);
 
-    const templateFileEntries = Object.keys(template)
+    const templateFileEntries = Object.keys(template.files)
       .map((path) => {
-        const file = template[path];
-        const afterTemplate = path.split("/template/").pop()!;
-        const newPath = `/build/${routeId}/${afterTemplate}`;
+        const file = template.files[path];
+        const newPath = path.replace(".github.template", ".github");
         const segments = routeId.split(".");
         const firstDomain = domains.find(
           (domain) => domain.startsWith(segments[0]) + ".",
@@ -176,8 +176,8 @@ const build = (context: {
     // merge template with base files found,
     // overwriting template files if they exist in the base
     const files = Object.assign(
-      Object.fromEntries(baseFileEntries),
       Object.fromEntries(templateFileEntries),
+      Object.fromEntries(baseFileEntries),
     );
 
     return {
@@ -262,7 +262,7 @@ export default {
     if (!template.ok) {
       return new Response("Couldn't find template repo", { status: 404 });
     }
-    const templateFiles = await monorepo.json();
+    const templateFiles = await template.json();
 
     let secretFiles: { files: FileObject } | undefined = undefined;
     if (
