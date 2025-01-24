@@ -7,8 +7,6 @@ Problem: serverless and workers are great but require too much config to spin up
 
 Main idea: a compiler that turns a single file to a folder with that file and all configurations needed to deploy a website/api on cloudflare.
 
-The dream: ultimately, a single readme with the domain as the filename should be enough to create a new service. A single repo can become 100 deployments.
-
 ![](idea.drawio.svg)
 
 # POC
@@ -24,7 +22,8 @@ The dream: ultimately, a single readme with the domain as the filename should be
 - ✅ Deploy on https://monoflare.cloud
 - Domains need to be extracted from CloudFlare via API
 - Make `multipatch` actually work. Deployment should happen in an individual repo or branch per deployment, because the build step can take a while and we want visibility. Also for other reasons (such as exposure) we want separate repos.
-  - create forgithub.patch
+  - create `forgithub.patch`
+  - then implement multipatch
 - make typescript analysis work at `zipobject` so we can actually use the single file as source
 
 Now we have one-file workers with automatic domains!
