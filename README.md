@@ -1,7 +1,7 @@
 # Monoflare - The Monorepo for Cloudflare Microservices
 
 > [!IMPORTANT]
-> This is currently just a WIP and isn't functional yet
+> This is currently just a WIP and isn't functional yet. [Let's chat](https://x.com/janwilmake/status/1882815278557622711)!
 
 Problem: serverless and workers are great but require too much config to spin up a domain somewhere.
 
