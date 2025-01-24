@@ -20,11 +20,10 @@ The dream: ultimately, a single readme with the domain as the filename should be
 - ✅ tsconfig.json will be added automatically as well as .gitignore, .assetsignore, etc
 - ✅ if there's a folder that matches a domain, that will be placed in the folder too and it will become public
 - ✅ wrapper (e.g. ratelimiter or authlayer) can be in between. part of template
-- Deploy on `monoflare.cloud`
-- Test the API to return deployments
+- Test the API to return deployments. Test if template merging works as desired.
+- Deploy on https://monoflare.cloud
 - Domains need to be extracted from cloudflare via API
 - Make multipatch actually work!
-- Build should happen from cloudflare worker. using `uithub` and `forgithub.push`
 - Deployment should happen in an individual repo or branch per deployment, because the build step can take a while and we want visibility. Also for other reasons (such as exposure) we want separate repos.
 
 Now we have one-file workers with automatic domains!
@@ -41,8 +40,8 @@ Parsing the file
 
 # Wishlist
 
-- nlang functionality:
+- LLM functionality:
   - generate fetch handler logic from regular functions, just using domain-name filenames that don't have it as candidates for this.
-  - openapi is very useful
+  - generate OpenAPI specification from worker
 - cross-cloud! allow vercel & deno too, and bun if possible. choose most logical one. cross language too!
 - environment variables get set automatically, directly to cloudflare worker, based on single central secrets repo
