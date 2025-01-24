@@ -1,0 +1,9 @@
+name = "monoflare"
+main = "main.ts"
+compatibility_date = "2025-01-24"
+assets = { directory= "./" }
+
+# routes = [
+#  { pattern = "monoflare.cloud", custom_domain = true },
+#  { pattern = "www.monoflare.cloud", custom_domain = true }
+# ]

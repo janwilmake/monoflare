@@ -1,0 +1,13 @@
+{
+  "compileOnSave": true,
+  "include": ["*.ts"],
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "lib": ["es2022", "DOM"],
+    "resolveJsonModule": true,
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "declaration": true
+  }
+}
